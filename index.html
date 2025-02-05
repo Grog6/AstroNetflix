@@ -1,0 +1,252 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <link rel="manifest" href="/manifest.json">
+  <link rel="apple-touch-icon" href="/icons/apple-touch-icon.png">
+  <link rel="shortcut icon" href="icons/icon.ico" type="image/x-icon">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta name="theme-color" content="#4285f4" />
+  <meta name="robots" content="index, follow">
+  <meta property="og:image" content="https://netflix-1uh.pages.dev/og.jpg"/>
+  <meta name="description"
+    content="Discover and stream your favorite movies and TV shows with NETFLIX - an open source content search and watch website. Enjoy unlimited access to a vast library of content for free.">
+    <title>Netflix by Astro</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.7.2/css/all.min.css" integrity="sha512-Evv84Mr4kqVGRNSgIGL/F/aIDqQb7xQ2vcrdIwxfjThSH8CSR7PBEakCr51Ck+w+/U6swU2Im1vVX0SVk9ABhg==" crossorigin="anonymous" referrerpolicy="no-referrer" />
+  <link rel="preload stylesheet" href="style.min.css" as="style">
+  <link rel="preload stylesheet" href="center-atom.min.css" as="style">
+  <!-- Google tag (gtag.js) -->
+  <script defer src="https://www.googletagmanager.com/gtag/js?id=G-THTQ9GZQ0J">
+    window.dataLayer = window.dataLayer || [];
+    function gtag() { dataLayer.push(arguments); }
+    gtag('js', new Date());
+    gtag('config', 'G-THTQ9GZQ0J');
+  </script>
+  <!-- Serviceworker code for PWA  -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', function() {
+        navigator.serviceWorker.register('/sw.js').then(function(registration) {
+          console.log('Service worker registered: ', registration.scope);
+        }).catch(function(error) {
+          console.log('Service worker registration failed: ', error);
+        });
+      });
+    }
+  </script>
+  <script type="text/javascript" src="https://platform-api.sharethis.com/js/sharethis.js#property=64c60eb01734a80012bd61d3&product=video-share-buttons&source=platform" async="async"></script>
+  <style>
+    /* CSS tambahan untuk meniru desain pada gambar */
+
+    body {
+      background-color: #ffffff;
+      font-family: Arial, sans-serif;
+      margin: 0;
+      padding: 0;
+    }
+
+    /* Bagian judul "NETFLIX" */
+    .netflix-title {
+      color: #E50914; /* Warna khas Netflix */
+      font-weight: 700;
+      font-size: 3rem;
+      margin-bottom: 0;
+    }
+
+    /* Bagian sub-judul "FREE NETFLIX" */
+    .free-netflix-title {
+      font-size: 1.75rem;
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+
+    /* Bagian bullet points */
+    .feature-list li {
+      margin-bottom: 0.5rem;
+    }
+
+    /* Bagian form pencarian */
+    .search-label {
+      font-weight: 600;
+      margin-top: 2rem;
+      margin-bottom: 0.5rem;
+    }
+
+    .search-input::placeholder {
+      color: #999;
+    }
+
+    /* Bagian teks penjelasan */
+    .description {
+      margin-top: 2rem;
+      margin-bottom: 2rem;
+      line-height: 1.6;
+    }
+
+    /* Bagian "Support me" */
+    .support-title {
+      font-weight: 600;
+      margin-bottom: 1rem;
+    }
+    .support-icons a {
+      margin-right: 1rem;
+      text-decoration: none;
+      color: #000;
+    }
+
+    /* Bagian footer */
+    footer {
+      border-top: 1px solid #ddd;
+      margin-top: 2rem;
+      padding-top: 1rem;
+    }
+    footer p {
+      margin: 0;
+      font-size: 0.9rem;
+    }
+    footer a {
+      text-decoration: none;
+      color: #000;
+      margin-right: 1rem;
+      font-size: 0.9rem;
+    }
+     </style>
+</head>
+<body>
+    <nav class="navbar bg-dark">
+        <div class="container-fluid d-flex justify-content-center">
+          <span class="navbar mb-0 h1 netflix-title">NETFLIX</span>
+        </div>
+      </nav>
+  <div class="container py-2">
+    <!-- Judul -->
+    
+    <!-- Sub Judul: FREE NETFLIX & Fitur -->
+    <div class="text-center">
+      <h1 class="free-netflix-title">FREE NETFLIX</h1>
+      <ul class="list-unstyled feature-list">
+        <li><i class="fa-solid fa-check" style="color: #048113;"></i> Play (almost) any movies</li>
+        <li><i class="fa-solid fa-check" style="color: #048113;"></i> Watch trailer</li>
+        <li><i class="fa-solid fa-check" style="color: #048113;"></i> View movie information</li>
+        <li><i class="fa-solid fa-check" style="color: #048113;"></i> Discover movies keyword</li>
+        <li><i class="fa-solid fa-check" style="color: #048113;"></i> Custom subtitle (*only movies, series coming soon)</li>
+      </ul>
+    </div>
+
+    <!-- Form Pencarian -->
+    <div class="text-center">
+      <label for="searchInput" class="search-label">
+        Search any Movie / Webseries / Anime:
+      </label>
+      <div class="row justify-content-center">
+        <div class="col-md-6">
+          <div class="search-container input-group">
+            <input 
+              type="text" 
+              class="form-control search-input" 
+              id="search-input" 
+              placeholder="Cari Film disini..." 
+              aria-label="Cari Film"
+            >
+            <button class="btn btn-danger" type="button" id="search-button">Search</button>
+          </div>
+        </div>
+      </div>
+    </div>
+    <center>
+        <div id="video" class="video">
+          <iframe id="iframe" scrolling="no" src="" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen></iframe>
+          <p style="color: rgb(79, 221, 221); font-weight: 500;">In case of any Error or Too Much Buffering click again on
+            your Movie poster down below or just change the Player from the right corner in video player. </p>
+          <!-- ShareThis BEGIN --><div class="sharethis-inline-share-buttons"></div><!-- ShareThis END -->
+          <div id="webSeriesData"></div>
+        </div>
+      </center>
+      <div id="results"></div>
+    <!-- Deskripsi -->
+    <div class="description text-center mx-auto" style="max-width: 700px;">
+      <p>
+        <strong>Netflix by Astro</strong> adalah proyek open-source yang memungkinkan pengguna 
+        untuk mencari dan mengambil data tentang Film dan Web Show dengan mudah dari Internet. 
+        Dokumentasi ini menyediakan gambaran tentang fitur dan fungsionalitas website, 
+        termasuk sumber data, antarmuka pengguna, dan kontribusi komunitas.
+      </p>
+    </div><hr>
+
+    <div class="container my-4">
+        <h5 class="">Support Me:</h5>
+        <div class="d-grid gap-2">
+          <!-- Tombol Instagram -->
+          <a href="https://www.instagram.com/zulfiaswin05/"
+            class="btn btn-outline-danger d-flex align-items-center justify-content-start p-2 instagram-btn"
+            >
+            <!-- Ikon Instagram -->
+            <i 
+              class="fa-brands fa-instagram fa-2xl me-3" 
+            ></i>
+      
+            <!-- Teks "Instagram" dan Username -->
+            <div>
+              <h5 class="mb-0">Instagram</h5>
+              <small>@zulfiaswin05</small>
+            </div>
+        </a>
+        </div>
+        <div class="mt-2 d-grid gap-2">
+            <!-- Tombol Instagram -->
+            <a href="https://t.me/astroww20"
+              class="btn btn-outline-primary d-flex align-items-center justify-content-start p-2 instagram-btn"
+              >
+              <!-- Ikon Instagram -->
+              <i 
+                class="fa-brands fa-telegram fa-2xl me-3" 
+              ></i>
+        
+              <!-- Teks "Instagram" dan Username -->
+              <div>
+                <h5 class="mb-0">Telegram</h5>
+                <small>@astroww20</small>
+              </div>
+            </a>
+          </div>
+          <div class="mt-2 d-grid gap-2">
+            <!-- Tombol Instagram -->
+            <a href="https://wa.me/6285755502682"
+              class="btn btn-outline-success d-flex align-items-center justify-content-start p-2 instagram-btn"
+              >
+              <!-- Ikon Instagram -->
+              <i 
+                class="fa-brands fa-whatsapp fa-2xl me-3" 
+              ></i>
+        
+              <!-- Teks "Instagram" dan Username -->
+              <div>
+                <h5 class="mb-0">Whatsapp</h5>
+                <small>85755502682</small>
+              </div>
+            </a>
+          </div>
+      </div>
+    <!-- Footer -->
+    <footer class="text-center mt-5">
+      <p class="mb-1">
+        <strong>Information:</strong> Netflix by Astro - Version 1.0.2012
+      </p>
+      <div>
+        <a href="#">Privacy</a>
+        <a href="#">Terms And Conditions</a>
+        <a href="#">Source Code</a>
+      </div>
+    </footer>
+  </div>
+
+  <!-- Bootstrap JS -->
+  <script 
+    src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js">
+  </script>
+  <script src="https://cdn.jsdelivr.net/npm/pace-js@latest/pace.min.js"></script>
+  <script src="script.min.js"></script>
+</body>
+</html>
